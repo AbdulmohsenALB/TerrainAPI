@@ -6,10 +6,10 @@ import net.minecraft.core.block.Block;
 import net.minecraft.core.data.registry.Registries;
 import net.minecraft.core.world.biome.Biome;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import useless.terrainapi.config.OreConfig;
 import useless.terrainapi.util.Utilities;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 
 public class OverworldConfig extends OreConfig {
