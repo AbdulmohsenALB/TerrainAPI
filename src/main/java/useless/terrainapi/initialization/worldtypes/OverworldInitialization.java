@@ -25,29 +25,16 @@ public class OverworldInitialization extends BaseInitialization {
 		overworldConfig.addGrassDensity(Biomes.OVERWORLD_FOREST, 2);
 		overworldConfig.addGrassDensity(Biomes.OVERWORLD_MEADOW, 2);
 		overworldConfig.addGrassDensity(Biomes.OVERWORLD_RAINFOREST, 10);
-		overworldConfig.addGrassDensity(Biomes.OVERWORLD_DESERT, 5);
 		overworldConfig.addGrassDensity(Biomes.OVERWORLD_SEASONAL_FOREST, 2);
 		overworldConfig.addGrassDensity(Biomes.OVERWORLD_TAIGA, 1);
 		overworldConfig.addGrassDensity(Biomes.OVERWORLD_BOREAL_FOREST, 5);
-		overworldConfig.addGrassDensity(Biomes.OVERWORLD_PLAINS, 10);
+		overworldConfig.addGrassDensity(Biomes.OVERWORLD_GRASSLANDS, 8);
+		overworldConfig.addGrassDensity(Biomes.OVERWORLD_CAATINGA, 2);
 		overworldConfig.addGrassDensity(Biomes.OVERWORLD_SWAMPLAND, 4);
-		overworldConfig.addGrassDensity(Biomes.OVERWORLD_SHRUBLAND, 2);
-		overworldConfig.addGrassDensity(Biomes.OVERWORLD_OUTBACK_GRASSY, 25);
-		overworldConfig.addGrassDensity(Biomes.OVERWORLD_BIRCH_FOREST, 10);
-
-		overworldConfig.addFlowerDensity(Biomes.OVERWORLD_SEASONAL_FOREST, 1);
-		overworldConfig.addFlowerDensity(Biomes.OVERWORLD_MEADOW, 2);
-		overworldConfig.addFlowerDensity(Biomes.OVERWORLD_BOREAL_FOREST, 2);
-		overworldConfig.addFlowerDensity(Biomes.OVERWORLD_SHRUBLAND, 1);
-
-		overworldConfig.addYellowFlowerDensity(Biomes.OVERWORLD_FOREST, 2);
-		overworldConfig.addYellowFlowerDensity(Biomes.OVERWORLD_SWAMPLAND, 2);
-		overworldConfig.addYellowFlowerDensity(Biomes.OVERWORLD_TAIGA, 2);
-		overworldConfig.addYellowFlowerDensity(Biomes.OVERWORLD_PLAINS, 3);
-		overworldConfig.addYellowFlowerDensity(Biomes.OVERWORLD_OUTBACK_GRASSY, 2);
-		overworldConfig.addYellowFlowerDensity(Biomes.OVERWORLD_OUTBACK, 2);
+		overworldConfig.addGrassDensity(Biomes.OVERWORLD_BIRCH_FOREST, 2);
 
 		overworldConfig.addTreeDensity(Biomes.OVERWORLD_FOREST, 5);
+		overworldConfig.addTreeDensity(Biomes.OVERWORLD_SHRUBLAND, -2);
 		overworldConfig.addTreeDensity(Biomes.OVERWORLD_BIRCH_FOREST, 4);
 		overworldConfig.addTreeDensity(Biomes.OVERWORLD_RAINFOREST, 10);
 		overworldConfig.addTreeDensity(Biomes.OVERWORLD_SEASONAL_FOREST, 2);
@@ -56,6 +43,7 @@ public class OverworldInitialization extends BaseInitialization {
 		overworldConfig.addTreeDensity(Biomes.OVERWORLD_DESERT, -1000);
 		overworldConfig.addTreeDensity(Biomes.OVERWORLD_TUNDRA, -1000);
 		overworldConfig.addTreeDensity(Biomes.OVERWORLD_PLAINS, -1000);
+		overworldConfig.addTreeDensity(Biomes.OVERWORLD_CAATINGA, 4);
 		overworldConfig.addTreeDensity(Biomes.OVERWORLD_SWAMPLAND, 4);
 		overworldConfig.addTreeDensity(Biomes.OVERWORLD_OUTBACK_GRASSY, 0);
 
@@ -114,11 +102,108 @@ public class OverworldInitialization extends BaseInitialization {
 		biomeFeatures.addFeatureSurface(new WorldFeatureRichScorchedDirt(10), 1, new Biome[]{Biomes.OVERWORLD_OUTBACK, Biomes.OVERWORLD_OUTBACK_GRASSY});
 		biomeFeatures.addFeature(OverworldFunctions::getTreeFeature, null, OverworldFunctions::getTreeDensity, null, -1f);
 		biomeFeatures.addFeatureSurface(new WorldFeatureSugarCaneTall(), 1, new Biome[]{Biomes.OVERWORLD_RAINFOREST});
-		biomeFeatures.addFeature(OverworldFunctions::flowerTypeCondition, null, (Parameters x) -> overworldConfig.getFlowerDensity(x.biome, 0), null, 1f);
-		biomeFeatures.addFeature((Parameters x) -> new WorldFeatureFlowers(Block.flowerYellow.id), null, (Parameters x) -> overworldConfig.getYellowFlowerDensity(x.biome, 0), null, 1);
+
+		biomeFeatures.addFeature(
+			parameters -> {
+				int blockId = Block.flowerPurple.id;
+				if (parameters.random.nextInt(12) == 0) {
+					blockId = Block.flowerRed.id;
+				}
+
+				if (parameters.random.nextInt(6) == 0) {
+					blockId = Block.flowerYellow.id;
+				}
+				return new WorldFeatureTallGrass(blockId);
+			}, null,
+			parameters -> {
+				if (parameters.biome == Biomes.OVERWORLD_MEADOW){
+					return 3;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_BOREAL_FOREST){
+					return 2;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_SHRUBLAND){
+					return 1;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_TAIGA){
+					return 1;
+				}
+				return 0;
+			}, null, 1f);
+
+		biomeFeatures.addFeature(
+			parameters -> new WorldFeatureFlowers(Block.flowerLightBlue.id), null,
+			parameters -> {
+				if (parameters.biome == Biomes.OVERWORLD_FOREST){
+					return 2;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_SWAMPLAND){
+					return 3;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_RAINFOREST){
+					return 4;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_CAATINGA || parameters.biome == Biomes.OVERWORLD_CAATINGA_PLAINS){
+					return 3;
+				}
+				return 0;
+			}, null, 1f);
+
+		biomeFeatures.addFeature(
+			parameters -> new WorldFeatureFlowers(Block.flowerOrange.id), null,
+			parameters -> {
+				if (parameters.biome == Biomes.OVERWORLD_GRASSLANDS){
+					return 1;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_PLAINS){
+					return 5;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_CAATINGA || parameters.biome == Biomes.OVERWORLD_CAATINGA_PLAINS){
+					return 5;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_OUTBACK_GRASSY || parameters.biome == Biomes.OVERWORLD_OUTBACK){
+					return 3;
+				}
+				return 0;
+			}, null, 1f);
+
+		biomeFeatures.addFeature(
+			parameters -> new WorldFeatureFlowers(Block.flowerYellow.id), null,
+			parameters -> {
+				if (parameters.biome == Biomes.OVERWORLD_FOREST){
+					return 2;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_SWAMPLAND){
+					return 2;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_TAIGA){
+					return 2;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_PLAINS){
+					return 3;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_CAATINGA || parameters.biome == Biomes.OVERWORLD_CAATINGA_PLAINS){
+					return 5;
+				}
+				if (parameters.biome == Biomes.OVERWORLD_OUTBACK_GRASSY || parameters.biome == Biomes.OVERWORLD_OUTBACK){
+					return 2;
+				}
+				return 0;
+			}, null, 1f);
+
 		biomeFeatures.addFeature(OverworldFunctions::grassTypeCondition, null, (Parameters x) -> overworldConfig.getGrassDensity(x.biome, 0), null, 1);
 		biomeFeatures.addFeature(new WorldFeatureSpinifexPatch(), 1, 4, new Biome[]{Biomes.OVERWORLD_OUTBACK});
-		biomeFeatures.addFeature(new WorldFeatureDeadBush(Block.deadbush.id), 1, 2, new Biome[]{Biomes.OVERWORLD_DESERT});
-		biomeFeatures.addFeature(new WorldFeatureCactus(), 1, 10, new Biome[]{Biomes.OVERWORLD_DESERT});
+		biomeFeatures.addFeature(new WorldFeatureDeadBush(Block.deadbush.id), 1, 2, new Biome[]{Biomes.OVERWORLD_DESERT, Biomes.OVERWORLD_CAATINGA, Biomes.OVERWORLD_CAATINGA_PLAINS});
+		biomeFeatures.addFeature(parameters -> new WorldFeatureDeadBush(Block.deadbush.id), null, parameters -> {
+			if (parameters.biome == Biomes.OVERWORLD_DESERT) {
+				return 2;
+			}
+
+			if (parameters.biome  == Biomes.OVERWORLD_CAATINGA_PLAINS || parameters.biome == Biomes.OVERWORLD_CAATINGA) {
+				return 1;
+			}
+			return 0;
+		}, null, 1f);
+		biomeFeatures.addFeature(new WorldFeatureCactus(), 1, 10, new Biome[]{Biomes.OVERWORLD_DESERT, Biomes.OVERWORLD_CAATINGA, Biomes.OVERWORLD_OUTBACK_GRASSY});
 	}
 }

@@ -18,8 +18,10 @@ public class OverworldConfig extends OreConfig {
 	@Expose @SerializedName(value = "Grass Density")
 	public HashMap<String, Integer> grassDensityMap = new HashMap<>();
 	@Expose @SerializedName(value = "Flower Density")
+	@Deprecated
 	public HashMap<String, Integer> flowerDensityMap = new HashMap<>();
 	@Expose @SerializedName(value = "Yellow Flower Density")
+	@Deprecated
 	public HashMap<String, Integer> yellowFlowerDensityMap = new HashMap<>();
 	@Expose @SerializedName(value = "Tree Density")
 	public HashMap<String, Integer> treeDensityMap = new HashMap<>();
@@ -105,8 +107,10 @@ public class OverworldConfig extends OreConfig {
 		return grassDensityMap.getOrDefault(Registries.BIOMES.getKey(biome), defaultValue);
 	}
 
-	/**Specifies the number of chances for red/yellow flowers patches to spawn for the specified biome
+	/**
+	 * @deprecated As of BTA 7.2 flower generation has changed in such a way where using maps for each flower density is impractical
 	 */
+	@Deprecated
 	public void addFlowerDensity(Biome biome, int density){
 		if (getConfigOverride() && getFlowerDensity(biome) != null){
 			return;
@@ -115,23 +119,27 @@ public class OverworldConfig extends OreConfig {
 	}
 
 	/**
-	 * @return Biome's red/yellow density, returns null if there is no entry for the biome
+	 * @deprecated As of BTA 7.2 flower generation has changed in such a way where using maps for each flower density is impractical
 	 */
+	@Deprecated
 	@Nullable
 	public Integer getFlowerDensity(Biome biome){
 		return flowerDensityMap.get(Registries.BIOMES.getKey(biome));
 	}
 
 	/**
-	 * @return Biome's red/yellow density, returns defaultValue if there is no entry for the biome
+	 * @deprecated As of BTA 7.2 flower generation has changed in such a way where using maps for each flower density is impractical
 	 */
+	@Deprecated
 	@NotNull
 	public Integer getFlowerDensity(Biome biome, int defaultValue){
 		return flowerDensityMap.getOrDefault(Registries.BIOMES.getKey(biome), defaultValue);
 	}
 
-	/**Specifies the number of chances for yellow flowers to spawn for the specified biome
+	/**
+	 * @deprecated As of BTA 7.2 flower generation has changed in such a way where using maps for each flower density is impractical
 	 */
+	@Deprecated
 	public void addYellowFlowerDensity(Biome biome, int density){
 		if (getConfigOverride() && getYellowFlowerDensity(biome) != null){
 			return;
@@ -140,16 +148,19 @@ public class OverworldConfig extends OreConfig {
 	}
 
 	/**
-	 * @return Biome's yellow flower density, returns null if there is no entry for the biome
+	 * @deprecated As of BTA 7.2 flower generation has changed in such a way where using maps for each flower density is impractical
 	 */
+	@Deprecated
+
 	@Nullable
 	public Integer getYellowFlowerDensity(Biome biome){
 		return yellowFlowerDensityMap.get(Registries.BIOMES.getKey(biome));
 	}
 
 	/**
-	 * @return Biome's yellow flower density, returns defaultValue if there is no entry for the biome
+	 * @deprecated As of BTA 7.2 flower generation has changed in such a way where using maps for each flower density is impractical
 	 */
+	@Deprecated
 	@NotNull
 	public Integer getYellowFlowerDensity(Biome biome, int defaultValue){
 		return yellowFlowerDensityMap.getOrDefault(Registries.BIOMES.getKey(biome), defaultValue);
