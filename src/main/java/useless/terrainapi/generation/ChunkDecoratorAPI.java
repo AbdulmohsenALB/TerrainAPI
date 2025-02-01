@@ -1,7 +1,7 @@
 package useless.terrainapi.generation;
 
-import net.minecraft.core.block.Block;
-import net.minecraft.core.block.BlockSand;
+import net.minecraft.core.block.BlockLogicSand;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.biome.Biome;
 import net.minecraft.core.world.chunk.Chunk;
@@ -47,12 +47,12 @@ public abstract class ChunkDecoratorAPI implements ChunkDecorator {
 		random.setSeed(chunkSeed);
 		parameterBase = new Parameters(biome, random, chunk, this);
 
-		BlockSand.fallInstantly = true;
+		BlockLogicSand.fallInstantly = true;
 		world.scheduledUpdatesAreImmediate = true;
 
 		decorateAPI();
 
-		BlockSand.fallInstantly = false;
+		BlockLogicSand.fallInstantly = false;
 		world.scheduledUpdatesAreImmediate = false;
 	}
 	@ApiStatus.Internal
@@ -88,7 +88,7 @@ public abstract class ChunkDecoratorAPI implements ChunkDecorator {
 			int posX = x + random.nextInt(16) + xOff;
 			int posY = minY + random.nextInt(rangeY);
 			int posZ = z + random.nextInt(16) + zOff;
-			worldFeature.generate(world, random, posX, posY, posZ);
+			worldFeature.place(world, random, posX, posY, posZ);
 		}
 	}
 	@ApiStatus.Internal
@@ -98,7 +98,7 @@ public abstract class ChunkDecoratorAPI implements ChunkDecorator {
 			int offset = endingY - startingY >= 1 ? random.nextInt(endingY - startingY) : 0;
 			int posY = minY + startingY + offset;
 			int posZ = z + random.nextInt(16) + zOff;
-			featureFunction.apply(parameters).generate(world, random, posX, posY, posZ);
+			featureFunction.apply(parameters).place(world, random, posX, posY, posZ);
 		}
 	}
 	/**
@@ -123,7 +123,7 @@ public abstract class ChunkDecoratorAPI implements ChunkDecorator {
 			int posX = x + random.nextInt(16) + xOff;
 			int posZ = z + random.nextInt(16) + zOff;
 			int posY = this.world.getHeightValue(posX, posZ);
-			worldFeature.generate(world, random, posX, posY, posZ);
+			worldFeature.place(world, random, posX, posY, posZ);
 		}
 	}
 	@ApiStatus.Internal
@@ -132,7 +132,7 @@ public abstract class ChunkDecoratorAPI implements ChunkDecorator {
 			int posX = x + random.nextInt(16) + xOff;
 			int posZ = z + random.nextInt(16) + zOff;
 			int posY = this.world.getHeightValue(posX, posZ);
-			featureFunction.apply(parameters).generate(world, random, posX, posY, posZ);
+			featureFunction.apply(parameters).place(world, random, posX, posY, posZ);
 		}
 	}
 	@ApiStatus.Internal
@@ -143,10 +143,10 @@ public abstract class ChunkDecoratorAPI implements ChunkDecorator {
 				int dy = this.world.getHeightValue(dx, dz);
 				Biome localBiome = this.world.getBlockBiome(dx, dy, dz);
 				if ((localBiome.hasSurfaceSnow() || this.world.worldType == WorldTypes.OVERWORLD_WINTER) && dy > 0 && dy < this.world.getHeightBlocks() && this.world.isAirBlock(dx, dy, dz) && this.world.getBlockMaterial(dx, dy - 1, dz).blocksMotion()) {
-					this.world.setBlockWithNotify(dx, dy, dz, Block.layerSnow.id);
+					this.world.setBlockWithNotify(dx, dy, dz, Blocks.LAYER_SNOW.id());
 				}
-				if (!localBiome.hasSurfaceSnow() && this.world.worldType != WorldTypes.OVERWORLD_WINTER || this.world.getBlockId(dx, oceanY - 1, dz) != Block.fluidWaterStill.id && this.world.getBlockId(dx, oceanY - 1, dz) != Block.fluidWaterFlowing.id) continue;
-				this.world.setBlockWithNotify(dx, oceanY - 1, dz, Block.ice.id);
+				if (!localBiome.hasSurfaceSnow() && this.world.worldType != WorldTypes.OVERWORLD_WINTER || this.world.getBlockId(dx, oceanY - 1, dz) != Blocks.FLUID_WATER_STILL.id() && this.world.getBlockId(dx, oceanY - 1, dz) != Blocks.FLUID_WATER_FLOWING.id()) continue;
+				this.world.setBlockWithNotify(dx, oceanY - 1, dz, Blocks.ICE.id());
 			}
 		}
 	}

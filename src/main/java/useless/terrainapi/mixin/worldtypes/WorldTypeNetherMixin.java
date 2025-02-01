@@ -2,7 +2,7 @@ package useless.terrainapi.mixin.worldtypes;
 
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.generate.chunk.ChunkGenerator;
-import net.minecraft.core.world.type.WorldTypeNether;
+import net.minecraft.core.world.type.nether.WorldTypeNether;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

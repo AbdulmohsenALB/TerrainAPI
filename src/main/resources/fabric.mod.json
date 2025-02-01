@@ -32,11 +32,12 @@
     "terrainapi.mixins.json"
   ],
 
-  "depends": {
-    "fabricloader": ">=0.13.3"
-  },
-  "suggests": {
-  },
+	"depends": {
+		"minecraft": "*",
+		"fabricloader": ">=0.15.5"
+	},
+	"suggests": {
+	},
 	"custom": {
 		"modmenu:api": true
 	}

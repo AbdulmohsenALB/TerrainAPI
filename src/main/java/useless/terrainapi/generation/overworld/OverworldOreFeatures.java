@@ -73,7 +73,7 @@ public class OverworldOreFeatures extends GeneratorFeatures {
 	 * @param defaultRange Value from [0, 1], it's the default fraction from the bottom of the world to the surface that the ore can generate
 	 * @param hasStoneStates Does ore have states for each stone type
 	 */
-	public void addManagedOreFeature(String modID, Block block, int defaultClusterSize, int defaultChances, float defaultRange, boolean hasStoneStates){
+	public void addManagedOreFeature(String modID, Block<?> block, int defaultClusterSize, int defaultChances, float defaultRange, boolean hasStoneStates){
 		config.setOreValues(modID, block, defaultClusterSize, defaultChances, defaultRange);
 		addManagedOreFeature(block, hasStoneStates);
 	}
@@ -82,9 +82,9 @@ public class OverworldOreFeatures extends GeneratorFeatures {
 	 * @param block Ore to generate
 	 * @param hasStoneStates Does ore have states for each stone type
 	 */
-	public void addManagedOreFeature(Block block, boolean hasStoneStates){
+	public void addManagedOreFeature(Block<?> block, boolean hasStoneStates){
 		String currentBlock = block.getKey();
-		addFeature((Parameters x) -> new WorldFeatureOre(block.id, config.clusterSize.get(currentBlock), hasStoneStates), null,
+		addFeature((Parameters x) -> new WorldFeatureOre(block.id(), config.clusterSize.get(currentBlock)), null,
 			OverworldFunctions::getStandardOreBiomesDensity, new Object[]{config.chancesPerChunk.get(currentBlock), null},
 			config.verticalStartingRange.get(currentBlock), config.verticalEndingRange.get(currentBlock));
 	}
@@ -96,7 +96,7 @@ public class OverworldOreFeatures extends GeneratorFeatures {
 	 * @param defaultEndingRange Value from [0, 1], it's the default fraction from the bottom of the world to the surface that the ore can generate
 	 * @param hasStoneStates Does ore have states for each stone type
 	 */
-	public void addManagedOreFeature(String modID, Block block, int defaultClusterSize, int defaultChances, float defaultStartingRange, float defaultEndingRange, boolean hasStoneStates){
+	public void addManagedOreFeature(String modID, Block<?> block, int defaultClusterSize, int defaultChances, float defaultStartingRange, float defaultEndingRange, boolean hasStoneStates){
 		config.setOreValues(modID, block, defaultClusterSize, defaultChances, defaultStartingRange, defaultEndingRange);
 		addManagedOreFeature(block, hasStoneStates);
 	}

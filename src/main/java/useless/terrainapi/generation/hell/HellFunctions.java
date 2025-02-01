@@ -32,7 +32,7 @@ public class HellFunctions {
 			}
 			if (parameters.random.nextInt(512) != 0) continue;
 			Random lRand = parameters.chunk.getChunkRandom(75644760L);
-			new WorldFeatureLabyrinth().generate(parameters.decorator.world, lRand, xPos, yPos, zPos);
+			new WorldFeatureLabyrinth().place(parameters.decorator.world, lRand, xPos, yPos, zPos);
 		}
 		return null;
 	}
@@ -50,7 +50,7 @@ public class HellFunctions {
 			int blockX = x + parameters.random.nextInt(16) + 8;
 			int blockY = parameters.decorator.minY + parameters.random.nextInt(parameters.random.nextInt(parameters.decorator.rangeY - 8) + 8);
 			int blockZ = z + parameters.random.nextInt(16) + 8;
-			new WorldFeatureLiquid(fluidId).generate(parameters.decorator.world, parameters.random, blockX, blockY, blockZ);
+			new WorldFeatureLiquid(fluidId).place(parameters.decorator.world, parameters.random, blockX, blockY, blockZ);
 		}
 		return null;
 	}
@@ -68,7 +68,7 @@ public class HellFunctions {
 			int yf = parameters.decorator.minY + parameters.random.nextInt(parameters.decorator.rangeY);
 			int zf = z + parameters.random.nextInt(16) + 8;
 			if (yf < parameters.decorator.minY + parameters.decorator.rangeY / 2 || parameters.random.nextInt(10) == 0) {
-				new WorldFeatureLake(Block.fluidLavaStill.id).generate(parameters.decorator.world, parameters.random, xf, yf, zf);
+				new WorldFeatureLake(Block.fluidLavaStill.id).place(parameters.decorator.world, parameters.random, xf, yf, zf);
 			}
 		}
 		return null;
@@ -87,9 +87,9 @@ public class HellFunctions {
 			int j8 = z + parameters.random.nextInt(16) + 8;
 			if (i5 < parameters.decorator.minY + parameters.decorator.rangeY / 2 || parameters.random.nextInt(10) == 0) {
 				if (parameters.random.nextInt(4) == 0) {
-					new WorldFeatureLake(Block.obsidian.id).generate(parameters.decorator.world, parameters.random, j1, i5, j8);
+					new WorldFeatureLake(Block.obsidian.id).place(parameters.decorator.world, parameters.random, j1, i5, j8);
 				} else {
-					new WorldFeatureLake(Block.fluidLavaStill.id).generate(parameters.decorator.world, parameters.random, j1, i5, j8);
+					new WorldFeatureLake(Block.fluidLavaStill.id).place(parameters.decorator.world, parameters.random, j1, i5, j8);
 				}
 			}
 		}
@@ -135,7 +135,7 @@ public class HellFunctions {
 			int xf = x + parameters.random.nextInt(16) + 8;
 			int zf = z + parameters.random.nextInt(16) + 8;
 			int yf = parameters.decorator.world.getHeightValue(xf, zf);
-			getTreeFeature(parameters).generate(parameters.decorator.world, parameters.random, xf, yf, zf);
+			getTreeFeature(parameters).place(parameters.decorator.world, parameters.random, xf, yf, zf);
 		}
 		return null;
 	}

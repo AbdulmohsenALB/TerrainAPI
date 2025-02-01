@@ -15,20 +15,12 @@ Some user configurable things being:
 Add this in your `build.gradle`:
 ```groovy
 repositories {
-    ivy {
-		url = "https://github.com/UselessSolutions"
-		patternLayout {
-			artifact "[organisation]/releases/download/v[revision]/[module]-[revision].jar"
-			m2compatible = true
-		}
-		metadataSources { artifact() }
-	}
+    mavenCentral()
+	maven { url = "https://jitpack.io" }
 }
 
 dependencies {
-
-    modImplementation "TerrainAPI:terrainapi:${project.terrain_api_version}"
-   
+    modImplementation 'com.github.UselessSolutions:TerrainAPI:v${project.terrain_api_version}'
 }
 ```
 

@@ -41,8 +41,8 @@ public class ChunkDecoratorOverworldHellAPI extends ChunkDecoratorAPI {
 		generateBiomeFeature(parameterBase.biome,xCoord, zCoord, parameterBase.random, parameterBase.chunk);
 		generateRandomFeatures(parameterBase.biome,xCoord, zCoord, parameterBase.random, parameterBase.chunk);
 
-		if (this.world.getBlockId(xCoord, minY + this.world.getWorldType().getOceanY() - 1, zCoord) == this.world.getWorldType().getOceanBlock()) {
-			this.world.setBlockWithNotify(xCoord, minY + this.world.getWorldType().getOceanY() - 1, zCoord, this.world.getWorldType().getOceanBlock());
+		if (this.world.getBlockId(xCoord, minY + this.world.getWorldType().getOceanY() - 1, zCoord) == this.world.getWorldType().getOceanY()) {
+			this.world.setBlockWithNotify(xCoord, minY + this.world.getWorldType().getOceanY() - 1, zCoord, this.world.getWorldType().getOceanBlockId());
 		}
 	}
 	@ApiStatus.Internal

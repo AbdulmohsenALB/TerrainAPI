@@ -22,7 +22,7 @@ public class RetroFunctions {
 			int structX = x + parameters.random.nextInt(16) + 8;
 			int structY = parameters.decorator.minY + parameters.random.nextInt(parameters.decorator.rangeY);
 			int structZ = z + parameters.random.nextInt(16) + 8;
-			new WorldFeatureDungeon(Block.cobbleStone.id, Block.cobbleStoneMossy.id, null).generate(parameters.decorator.world, parameters.random, structX, structY, structZ);
+			new WorldFeatureDungeon(Block.cobbleStone.id, Block.cobbleStoneMossy.id, null).place(parameters.decorator.world, parameters.random, structX, structY, structZ);
 		}
 		return null;
 	}
@@ -71,7 +71,7 @@ public class RetroFunctions {
 			int xf = x + parameters.random.nextInt(16) + 8;
 			int zf = z + parameters.random.nextInt(16) + 8;
 			int yf = parameters.decorator.world.getHeightValue(xf, zf);
-			getTreeFeature(parameters).generate(parameters.decorator.world, parameters.random, xf, yf, zf);
+			getTreeFeature(parameters).place(parameters.decorator.world, parameters.random, xf, yf, zf);
 		}
 		return null;
 	}

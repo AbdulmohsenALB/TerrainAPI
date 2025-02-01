@@ -1,6 +1,7 @@
 package useless.terrainapi.generation.overworld;
 
 import net.minecraft.core.block.Block;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.core.block.material.Material;
 import net.minecraft.core.world.biome.Biome;
 import net.minecraft.core.world.biome.Biomes;
@@ -21,7 +22,7 @@ public class OverworldFunctions {
 	 */
 	public static WorldFeature getTreeFeature(Parameters parameters){
 		WorldFeature treeFeature = parameters.biome.getRandomWorldGenForTrees(parameters.random);
-		treeFeature.func_517_a(1.0, 1.0, 1.0);
+		treeFeature.init(1.0, 1.0, 1.0);
 		return treeFeature;
 	}
 
@@ -62,20 +63,20 @@ public class OverworldFunctions {
 	 * @return Randomly returns tall grass or the random grass for the biome as specified in the OverworldConfig biomeRandomGrassBlock hashmap
 	 */
 	public static WorldFeature grassTypeCondition(Parameters parameters){
-		Block block = Block.tallgrass;
+		Block<?> block = Blocks.TALLGRASS;
 		if (Utilities.checkForBiomeInBiomes(parameters.biome, overworldConfig.biomeRandomGrassBlock.keySet().toArray(new String[0])) && parameters.random.nextInt(3) != 0) {
 			block = overworldConfig.getRandomGrassBlock(parameters.biome, block);
 		}
-		return new WorldFeatureTallGrass(block.id);
+		return new WorldFeatureTallGrass(block.id());
 	}
 	/**Vanilla flower feature generator
 	 * @param parameters Parameters Container
 	 * @return Randomly returns yellow or red flower features
 	 */
 	public static WorldFeature flowerTypeCondition(Parameters parameters){
-		int blockId = Block.flowerYellow.id;
+		int blockId = Blocks.FLOWER_YELLOW.id();
 		if (parameters.random.nextInt(3) != 0) {
-			blockId = Block.flowerRed.id;
+			blockId = Blocks.FLOWER_RED.id();
 		}
 		return new WorldFeatureTallGrass(blockId);
 	}
@@ -121,9 +122,9 @@ public class OverworldFunctions {
 			int yPos = parameters.decorator.minY + parameters.random.nextInt(parameters.decorator.rangeY);
 			int zPos = z + parameters.random.nextInt(16) + 8;
 			if (parameters.random.nextInt(2) == 0){
-				new WorldFeatureDungeon(Block.brickClay.id, Block.brickClay.id, null).generate(parameters.decorator.world, parameters.random, xPos, yPos, zPos);
+				new WorldFeatureDungeon(Blocks.BRICK_CLAY.id(), Blocks.BRICK_CLAY.id(), null).place(parameters.decorator.world, parameters.random, xPos, yPos, zPos);
 			} else {
-				new WorldFeatureDungeon(Block.cobbleStone.id, Block.cobbleStoneMossy.id, null).generate(parameters.decorator.world, parameters.random, xPos, yPos, zPos);
+				new WorldFeatureDungeon(Blocks.COBBLE_STONE.id(), Blocks.COBBLE_STONE_MOSSY.id(), null).place(parameters.decorator.world, parameters.random, xPos, yPos, zPos);
 			}
 		}
 		return null;
@@ -146,7 +147,7 @@ public class OverworldFunctions {
 			}
 			if (parameters.random.nextInt((int)parameters.customParameters[0]) != 0) continue;
 			Random lRand = parameters.chunk.getChunkRandom(75644760L);
-			new WorldFeatureLabyrinth().generate(parameters.decorator.world, lRand, xPos, yPos, zPos);
+			new WorldFeatureLabyrinth().place(parameters.decorator.world, lRand, xPos, yPos, zPos);
 		}
 		return null;
 	}
@@ -168,7 +169,7 @@ public class OverworldFunctions {
 
 				int topBlock = parameters.decorator.world.getHeightValue(x + dx, z + dz);
 				int id = parameters.decorator.world.getBlockId(x + dx, topBlock - 1, z + dz);
-				if (id != Block.grass.id) continue;
+				if (id != Blocks.GRASS.id()) continue;
 
 				int posXId = parameters.decorator.world.getBlockId(x + dx + 1, topBlock - 1, z + dz);
 				if (posXId == 0) continue;
@@ -181,12 +182,12 @@ public class OverworldFunctions {
 				int negYId = parameters.decorator.world.getBlockId(x + dx, topBlock - 2, z + dz);
 				if (negYId == 0) continue;
 
-				if ((!Block.blocksList[posXId].blockMaterial.isSolid() && Block.blocksList[posXId].blockMaterial != Material.water)
-					|| (!Block.blocksList[negXId].blockMaterial.isSolid() && Block.blocksList[negXId].blockMaterial != Material.water)
-					|| (!Block.blocksList[posZId].blockMaterial.isSolid() && Block.blocksList[posZId].blockMaterial != Material.water)
-					|| (!Block.blocksList[negZId].blockMaterial.isSolid() && Block.blocksList[negZId].blockMaterial != Material.water)
-					|| !Block.blocksList[negYId].blockMaterial.isSolid()) continue;
-				parameters.decorator.world.setBlock(x + dx, topBlock - 1, z + dz, Block.fluidWaterStill.id);
+				if ((!Blocks.blocksList[posXId].getMaterial().isSolid() && Blocks.blocksList[posXId].getMaterial() != Material.water)
+					|| (!Blocks.blocksList[negXId].getMaterial().isSolid() && Blocks.blocksList[negXId].getMaterial() != Material.water)
+					|| (!Blocks.blocksList[posZId].getMaterial().isSolid() && Blocks.blocksList[posZId].getMaterial() != Material.water)
+					|| (!Blocks.blocksList[negZId].getMaterial().isSolid() && Blocks.blocksList[negZId].getMaterial() != Material.water)
+					|| !Blocks.blocksList[negYId].getMaterial().isSolid()) continue;
+				parameters.decorator.world.setBlock(x + dx, topBlock - 1, z + dz, Blocks.FLUID_WATER_STILL.id());
 				parameters.decorator.world.setBlock(x + dx, topBlock, z + dz, 0);
 			}
 		}
@@ -203,14 +204,14 @@ public class OverworldFunctions {
 		int z = parameters.chunk.zPosition * 16;
 
 		if (lakeChance != 0 && parameters.random.nextInt(lakeChance) == 0) {
-			int fluid = Block.fluidWaterStill.id;
+			int fluid = Blocks.FLUID_WATER_STILL.id();
 			if (parameters.biome.hasSurfaceSnow()) {
-				fluid = Block.ice.id;
+				fluid = Blocks.ICE.id();
 			}
 			int xf = x + parameters.random.nextInt(16) + 8;
 			int yf = parameters.decorator.minY + parameters.random.nextInt(parameters.decorator.rangeY);
 			int zf = z + parameters.random.nextInt(16) + 8;
-			new WorldFeatureLake(fluid).generate(parameters.decorator.world, parameters.random, xf, yf, zf);
+			new WorldFeatureLake(fluid).place(parameters.decorator.world, parameters.random, xf, yf, zf);
 		}
 		return null;
 	}
@@ -227,7 +228,7 @@ public class OverworldFunctions {
 			int yf = parameters.decorator.minY + parameters.random.nextInt(parameters.random.nextInt(parameters.decorator.rangeY - parameters.decorator.rangeY / 16) + parameters.decorator.rangeY / 16);
 			int zf = z + parameters.random.nextInt(16) + 8;
 			if (yf < parameters.decorator.minY + parameters.decorator.rangeY / 2 || parameters.random.nextInt(10) == 0) {
-				new WorldFeatureLake(Block.fluidLavaStill.id).generate(parameters.decorator.world, parameters.random, xf, yf, zf);
+				new WorldFeatureLake(Blocks.FLUID_LAVA_STILL.id()).place(parameters.decorator.world, parameters.random, xf, yf, zf);
 			}
 		}
 		return null;
@@ -245,7 +246,7 @@ public class OverworldFunctions {
 			int blockX = x + parameters.random.nextInt(16) + 8;
 			int blockY = parameters.decorator.minY + parameters.random.nextInt(parameters.random.nextInt(parameters.decorator.rangeY - 8) + 8);
 			int blockZ = z + parameters.random.nextInt(16) + 8;
-			new WorldFeatureLiquid(fluidId).generate(parameters.decorator.world, parameters.random, blockX, blockY, blockZ);
+			new WorldFeatureLiquid(fluidId).place(parameters.decorator.world, parameters.random, blockX, blockY, blockZ);
 		}
 		return null;
 	}
@@ -262,7 +263,7 @@ public class OverworldFunctions {
 			int xf = x + parameters.random.nextInt(16) + 8;
 			int zf = z + parameters.random.nextInt(16) + 8;
 			int yf = parameters.decorator.world.getHeightValue(xf, zf);
-			getTreeFeature(parameters).generate(parameters.decorator.world, parameters.random, xf, yf, zf);
+			getTreeFeature(parameters).place(parameters.decorator.world, parameters.random, xf, yf, zf);
 		}
 		return null;
 	}

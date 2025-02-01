@@ -1,6 +1,7 @@
 package useless.terrainapi.initialization.worldtypes;
 
 import net.minecraft.core.block.Block;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.core.world.generate.feature.WorldFeatureCactus;
 import net.minecraft.core.world.generate.feature.WorldFeatureClay;
 import net.minecraft.core.world.generate.feature.WorldFeatureFlowers;
@@ -24,43 +25,43 @@ public class RetroInitialization extends BaseInitialization {
 	public static final OverworldBiomeFeatures biomeFeatures = ChunkDecoratorRetroAPI.biomeFeatures;
 	@Override
 	protected void initValues() {
-		retroConfig.setOreValues(TerrainMain.MOD_ID, Block.blockClay, 32, 10, 1);
+		retroConfig.setOreValues(TerrainMain.MOD_ID, Blocks.BLOCK_CLAY, 32, 10, 1);
 	}
 
 	@Override
 	protected void initStructure() {
 		structureFeatures.addFeature(RetroFunctions::generateDungeon, null);
-		structureFeatures.addFeature(OverworldFunctions::generateRandomFluid, new Object[]{50, Block.fluidWaterFlowing.id});
-		structureFeatures.addFeature(OverworldFunctions::generateRandomFluid, new Object[]{20, Block.fluidLavaFlowing.id});
+		structureFeatures.addFeature(OverworldFunctions::generateRandomFluid, new Object[]{50, Blocks.FLUID_WATER_FLOWING.id()});
+		structureFeatures.addFeature(OverworldFunctions::generateRandomFluid, new Object[]{20, Blocks.FLUID_LAVA_FLOWING.id()});
 	}
 
 	@Override
 	protected void initOre() {
-		String currentBlock = Block.blockClay.getKey();
+		String currentBlock = Blocks.BLOCK_CLAY.getKey();
 		oreFeatures.addFeature(
 			(x) -> new WorldFeatureClay(retroConfig.clusterSize.get(currentBlock)), null,
 			OverworldFunctions::getStandardOreBiomesDensity, new Object[]{retroConfig.chancesPerChunk.get(currentBlock), null},
 			retroConfig.verticalStartingRange.get(currentBlock), retroConfig.verticalEndingRange.get(currentBlock));
-		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID, Block.dirt, 32, 20, 1, false);
-		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID, Block.gravel, 32, 10, 1, false);
-		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID, Block.oreCoalStone, 16, 20, 1, true);
-		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID, Block.oreIronStone, 8, 20, 1f/2, true);
-		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID, Block.oreGoldStone, 8, 2, 1f/4, true);
-		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID, Block.oreRedstoneStone, 7, 8, 1f/8, true);
-		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID, Block.oreDiamondStone, 7, 1, 1f/8, true);
+		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID, Blocks.DIRT, 32, 20, 1, false);
+		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID,Blocks.GRAVEL, 32, 10, 1, false);
+		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID,Blocks.ORE_COAL_STONE, 16, 20, 1f, true);
+		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID,Blocks.ORE_IRON_STONE, 8, 20, 1f/2, true);
+		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID,Blocks.ORE_GOLD_STONE, 8, 2, 1f/4, true);
+		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID,Blocks.ORE_REDSTONE_STONE, 7, 8, 1f/8, true);
+		oreFeatures.addManagedOreFeature(TerrainMain.MOD_ID,Blocks.ORE_DIAMOND_STONE, 7, 1, 1f/8, true);
 	}
 
 	@Override
 	protected void initRandom() {
-		randomFeatures.addFeature(new WorldFeatureFlowers(Block.flowerRed.id), 2, 1);
-		randomFeatures.addFeature(new WorldFeatureFlowers(Block.mushroomBrown.id), 4, 1);
-		randomFeatures.addFeature(new WorldFeatureFlowers(Block.mushroomRed.id), 8, 1);
+		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.FLOWER_RED.id(), 1, false), 2, 1); Dont know what to put for count
+		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.MUSHROOM_BROWN.id(), 1, false), 4, 1); Dont know what to put for count
+		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.MUSHROOM_RED.id(), 1, false), 8, 1); Dont know what to put for count
 	}
 
 	@Override
 	protected void initBiome() {
 		biomeFeatures.addFeature(RetroFunctions::getTreeFeature, null, RetroFunctions::getTreeDensity, null, -1f);
-		biomeFeatures.addFeature(new WorldFeatureFlowers(Block.flowerYellow.id), 1, 2, null);
+		biomeFeatures.addFeature(new WorldFeatureFlowers(Blocks.FLOWER_YELLOW.id(), 1, false), 1, 2, null); Dont know what to put for count
 		biomeFeatures.addFeature(new WorldFeatureSugarCane(), 1, 10, null);
 		biomeFeatures.addFeature(new WorldFeatureCactus(), 1, 1, null);
 	}

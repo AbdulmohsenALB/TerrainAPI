@@ -1,17 +1,17 @@
 package useless.terrainapi.generation.nether.api;
 
-import net.minecraft.core.block.BlockSand;
+import net.minecraft.core.block.BlockLogicSand;
 import net.minecraft.core.world.World;
 import net.minecraft.core.world.biome.Biome;
 import net.minecraft.core.world.chunk.Chunk;
 import net.minecraft.core.world.generate.feature.WorldFeature;
 import org.jetbrains.annotations.ApiStatus;
 import useless.terrainapi.config.ConfigManager;
-import useless.terrainapi.generation.nether.NetherConfig;
 import useless.terrainapi.generation.ChunkDecoratorAPI;
 import useless.terrainapi.generation.Parameters;
 import useless.terrainapi.generation.StructureFeatures;
 import useless.terrainapi.generation.nether.NetherBiomeFeatures;
+import useless.terrainapi.generation.nether.NetherConfig;
 import useless.terrainapi.generation.nether.NetherOreFeatures;
 import useless.terrainapi.generation.nether.NetherRandomFeatures;
 
@@ -44,9 +44,9 @@ public class ChunkDecoratorNetherAPI extends ChunkDecoratorAPI {
 
 		parameterBase = new Parameters(biome, random, chunk, this);
 
-		BlockSand.fallInstantly = true;
+		BlockLogicSand.fallInstantly = true;
 		decorateAPI();
-		BlockSand.fallInstantly = false;
+		BlockLogicSand.fallInstantly = false;
 	}
 
 	@Override

@@ -57,14 +57,14 @@ public class Utilities {
 	}
 
 	/**Finds a block by its block key
-	 * @param key Block Key
+	 * @param translationKey Block Key
 	 * @return Block if Block exists, null otherwise
 	 */
 	@Nullable
-	public static Block getBlock(String key){
-		if (key == null){
+	public static Block<?> getBlock(String translationKey){
+		if (translationKey == null){
 			return null;
 		}
-		return Block.getBlockByName(key);
+		return Block.setupTranslationKey(translationKey);
 	}
 }

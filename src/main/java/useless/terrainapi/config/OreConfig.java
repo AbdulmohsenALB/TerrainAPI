@@ -38,7 +38,7 @@ public class OreConfig extends APIConfig {
 	 * @param chances Number of chances per chunk to generate an ore patch, this values scales with world height
 	 * @param range Value from [0, 1], it's the fraction from the bottom of the world to the surface that the ore can generate
 	 */
-	public void setOreValues(String modID, Block block, int clusterSize, int chances, float range){
+	public void setOreValues(String modID, Block<?> block, int clusterSize, int chances, float range){
 		String key = block.getKey();
 		if (this.clusterSize.containsKey(key) && this.getConfigOverride()){
 			return;
@@ -55,7 +55,7 @@ public class OreConfig extends APIConfig {
 	 * @param startingRange Value from [0, 1], it's the fraction from the bottom of the world to the surface that the ore can generate
 	 * @param endingRange Value from [0, 1], it's the fraction from the bottom of the world to the surface that the ore can generate
 	 */
-	public void setOreValues(String modID, Block block, int clusterSize, int chances, float startingRange, float endingRange){
+	public void setOreValues(String modID, Block<?> block, int clusterSize, int chances, float startingRange, float endingRange){
 		String key = block.getKey();
 		if (this.clusterSize.containsKey(key) && this.getConfigOverride()){
 			return;

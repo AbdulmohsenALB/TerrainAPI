@@ -23,7 +23,7 @@ public class ConfigManager {
 		if (fileHashMap.get(id) != null) {
 			return;
 		}
-		Path filePath = Paths.get(FabricLoader.getInstance().getConfigDirectory() + "/" + TerrainMain.MOD_ID);
+		Path filePath = Paths.get(FabricLoader.getInstance().getConfigDir() + "/" + TerrainMain.MOD_ID);
 		try {
 			Files.createDirectories(filePath);
 		} catch (IOException e) {
