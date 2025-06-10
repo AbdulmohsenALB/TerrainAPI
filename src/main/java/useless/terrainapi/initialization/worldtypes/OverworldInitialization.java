@@ -101,9 +101,9 @@ public class OverworldInitialization extends BaseInitialization {
 
 	@Override
 	protected void initRandom() {
-		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.FLOWER_RED.id(), 1, true), 2, 1); Dont know what to put for count
-		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.MUSHROOM_BROWN.id(), 1, true), 4, 1); Dont know what to put for count
-		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.MUSHROOM_RED.id(), 1, true), 8, 1); Dont know what to put for count
+		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.FLOWER_RED.id(), 1, true), 2, 1); 
+		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.MUSHROOM_BROWN.id(), 1, true), 4, 1); 
+		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.MUSHROOM_RED.id(), 1, true), 8, 1); 
 		randomFeatures.addFeatureSurface(new WorldFeatureSugarCane(), 5);
 		randomFeatures.addFeatureSurface(new WorldFeaturePumpkin(), 128);
 		randomFeatures.addFeatureSurface(new WorldFeatureSponge(), 64);
