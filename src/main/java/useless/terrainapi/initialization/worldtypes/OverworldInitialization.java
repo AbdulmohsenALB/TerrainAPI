@@ -114,9 +114,9 @@ public class OverworldInitialization extends BaseInitialization {
 		biomeFeatures.addFeatureSurface(new WorldFeatureRichScorchedDirt(10), 1, new Biome[]{Biomes.OVERWORLD_OUTBACK, Biomes.OVERWORLD_OUTBACK_GRASSY});
 		biomeFeatures.addFeature(OverworldFunctions::getTreeFeature, null, OverworldFunctions::getTreeDensity, null, -1f);
 		biomeFeatures.addFeatureSurface(new WorldFeatureSugarCaneTall(), 1, new Biome[]{Biomes.OVERWORLD_RAINFOREST});
-		biomeFeatures.addFeature(OverworldFunctions::flowerTypeCondition, null, (Parameters x) -> overworldConfig.getFlowerDensity(x.biome, 0), null, 1f);
-		biomeFeatures.addFeature((Parameters x) -> new WorldFeatureFlowers(Blocks.FLOWER_YELLOW.id(), 1, true), null, (Parameters x) -> overworldConfig.getYellowFlowerDensity(x.biome, 0), null, 1); Dont know what to put for count
-		biomeFeatures.addFeature(OverworldFunctions::grassTypeCondition, null, (Parameters x) -> overworldConfig.getGrassDensity(x.biome, 0), null, 1);
+		biomeFeatures.addFeature(OverworldFunctions::flowerTypeCondition, null, (Parameters x) -> overworldConfig.getFlowerDensity(x.biome, 0), null, 1);
+		biomeFeatures.addFeature((Parameters x) -> new WorldFeatureFlowers(Blocks.FLOWER_YELLOW.id(), 1, true), null, (Parameters x) -> overworldConfig.getYellowFlowerDensity(x.biome, 0), null, 1); 
+		biomeFeatures.addFeature(OverworldFunctions::grassTypeCondition, null, (Parameters x) -> overworldConfig.getGrassDensity(x.biome, 0), null, 1f);
 		biomeFeatures.addFeature(new WorldFeatureSpinifexPatch(), 1, 4, new Biome[]{Biomes.OVERWORLD_OUTBACK});
 		biomeFeatures.addFeature(new WorldFeatureDeadBush(Blocks.DEADBUSH.id()), 1, 2, new Biome[]{Biomes.OVERWORLD_DESERT});
 		biomeFeatures.addFeature(new WorldFeatureCactus(), 1, 10, new Biome[]{Biomes.OVERWORLD_DESERT});
