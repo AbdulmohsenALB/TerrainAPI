@@ -53,15 +53,15 @@ public class RetroInitialization extends BaseInitialization {
 
 	@Override
 	protected void initRandom() {
-		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.FLOWER_RED.id(), 1, false), 2, 1); Dont know what to put for count
-		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.MUSHROOM_BROWN.id(), 1, false), 4, 1); Dont know what to put for count
-		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.MUSHROOM_RED.id(), 1, false), 8, 1); Dont know what to put for count
+		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.FLOWER_RED.id(), 1, false), 2, 1); 
+		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.MUSHROOM_BROWN.id(), 1, false), 4, 1); 
+		randomFeatures.addFeature(new WorldFeatureFlowers(Blocks.MUSHROOM_RED.id(), 1, false), 8, 1); 
 	}
 
 	@Override
 	protected void initBiome() {
 		biomeFeatures.addFeature(RetroFunctions::getTreeFeature, null, RetroFunctions::getTreeDensity, null, -1f);
-		biomeFeatures.addFeature(new WorldFeatureFlowers(Blocks.FLOWER_YELLOW.id(), 1, false), 1, 2, null); Dont know what to put for count
+		biomeFeatures.addFeature(new WorldFeatureFlowers(Blocks.FLOWER_YELLOW.id(), 1, false), 1, 2, null); 
 		biomeFeatures.addFeature(new WorldFeatureSugarCane(), 1, 10, null);
 		biomeFeatures.addFeature(new WorldFeatureCactus(), 1, 1, null);
 	}
