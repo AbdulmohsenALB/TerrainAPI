@@ -1,6 +1,8 @@
 package useless.terrainapi.generation.overworld;
 
 import net.minecraft.core.block.Block;
+import net.minecraft.core.block.Blocks;
+import net.minecraft.core.util.collection.NamespaceID;
 import net.minecraft.core.world.biome.Biome;
 import net.minecraft.core.world.generate.feature.WorldFeature;
 import net.minecraft.core.world.generate.feature.WorldFeatureOre;
@@ -84,10 +86,39 @@ public class OverworldOreFeatures extends GeneratorFeatures {
 	 */
 	public void addManagedOreFeature(Block<?> block, boolean hasStoneStates){
 		String currentBlock = block.getKey();
-		addFeature((Parameters x) -> new WorldFeatureOre(block.id(), config.clusterSize.get(currentBlock)), null,
+		addFeature((Parameters x) -> createWorldFeatureOre(block, hasStoneStates), null,
 			OverworldFunctions::getStandardOreBiomesDensity, new Object[]{config.chancesPerChunk.get(currentBlock), null},
 			config.verticalStartingRange.get(currentBlock), config.verticalEndingRange.get(currentBlock));
 	}
+
+	private WorldFeatureOre createWorldFeatureOre(Block<?> block, boolean hasStoneStates) {
+		if (hasStoneStates) {
+			WorldFeatureOre.OreMap oreMap = new WorldFeatureOre.OreMap();
+			oreMap.put(Blocks.STONE, block);
+			oreMap.put(Blocks.LIMESTONE, getOreVariant(block, "limestone"));
+			oreMap.put(Blocks.PERMAFROST, getOreVariant(block, "permafrost"));
+			oreMap.put(Blocks.GRANITE, getOreVariant(block, "granite"));
+			oreMap.put(Blocks.BASALT, getOreVariant(block, "basalt"));
+			return new WorldFeatureOre(oreMap, config.clusterSize.get(block.getKey()));
+		}
+		return new WorldFeatureOre(block.id(), config.clusterSize.get(block.getKey()));
+	}
+
+	private Block<?> getOreVariant(Block<?> block, String oreType) {
+		NamespaceID namespaceID = block.namespaceId();
+		switch (oreType) {
+			case "limestone": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), namespaceID.value() + "_limestone"), block);
+			case "granite": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), namespaceID.value() + "_granite"), block);
+			case "permafrost": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), namespaceID.value() + "_permafrost"), block);
+			case "basalt": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), namespaceID.value() + "_basalt"), block);
+			default: return block;
+		}
+	}
+
+	private Block<?> getBlockOrFallback(NamespaceID namespaceID, Block<?> block) {
+		return Blocks.blockMap.getOrDefault(namespaceID, block);
+	}
+
 	/**Adds an WorldFeatureOre, which has its generation characteristics managed by OreConfig
 	 * @param block Ore to generate
 	 * @param defaultClusterSize Default size in blocks of an ore vein
