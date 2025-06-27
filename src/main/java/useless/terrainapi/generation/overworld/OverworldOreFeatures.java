@@ -92,6 +92,7 @@ public class OverworldOreFeatures extends GeneratorFeatures {
 	}
 
 	private WorldFeatureOre createWorldFeatureOre(Block<?> block, boolean hasStoneStates) {
+		// stone states
 		if (hasStoneStates) {
 			WorldFeatureOre.OreMap oreMap = new WorldFeatureOre.OreMap();
 			oreMap.put(Blocks.STONE, block);
