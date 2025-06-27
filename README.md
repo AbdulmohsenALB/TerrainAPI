@@ -20,8 +20,15 @@ repositories {
 }
 
 dependencies {
-    modImplementation 'com.github.UselessSolutions:TerrainAPI:v${project.terrain_api_version}'
+    modImplementation 'com.github.AbdulmohsenALB:TerrainAPI0:1.0'
 }
+```
+```java
+// For ores with stone states, just add a "_" and the stone type after the regular ore name. For example: 
+"ruby_ore"
+// other states
+"ruby_ore_limestome"
+"ruby_ore_permafrost"
 ```
 
 Documentation Eventually! :)
