@@ -16,7 +16,7 @@ import java.util.Random;
 
 public class HellFunctions {
 	public static HellConfig hellConfig = ChunkDecoratorOverworldHellAPI.hellConfig;
-	/**Vanilla labyrinth generation code
+	/** Vanilla labyrinth generation code
 	 * @param parameters Parameters Container
 	 * @return null
 	 */

@@ -67,6 +67,6 @@ public class Utilities {
 			return null;
 		}
 		return Blocks.getBlock(Blocks.keyToIdMap.get(translationKey));
-		//return Block.setupTranslationKey(translationKey);
+		// return Block.setupTranslationKey(translationKey);
 	}
 }
