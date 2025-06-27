@@ -1,6 +1,7 @@
 package useless.terrainapi.generation.hell;
 
 import net.minecraft.core.block.Block;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.core.world.generate.feature.WorldFeature;
 import net.minecraft.core.world.generate.feature.WorldFeatureLabyrinth;
 import net.minecraft.core.world.generate.feature.WorldFeatureLake;
@@ -68,7 +69,7 @@ public class HellFunctions {
 			int yf = parameters.decorator.minY + parameters.random.nextInt(parameters.decorator.rangeY);
 			int zf = z + parameters.random.nextInt(16) + 8;
 			if (yf < parameters.decorator.minY + parameters.decorator.rangeY / 2 || parameters.random.nextInt(10) == 0) {
-				new WorldFeatureLake(Block.fluidLavaStill.id).place(parameters.decorator.world, parameters.random, xf, yf, zf);
+				new WorldFeatureLake(Blocks.FLUID_LAVA_STILL.id()).place(parameters.decorator.world, parameters.random, xf, yf, zf);
 			}
 		}
 		return null;
@@ -87,9 +88,11 @@ public class HellFunctions {
 			int j8 = z + parameters.random.nextInt(16) + 8;
 			if (i5 < parameters.decorator.minY + parameters.decorator.rangeY / 2 || parameters.random.nextInt(10) == 0) {
 				if (parameters.random.nextInt(4) == 0) {
-					new WorldFeatureLake(Block.obsidian.id).place(parameters.decorator.world, parameters.random, j1, i5, j8);
+
+					new WorldFeatureLake(Blocks.OBSIDIAN.id()).place(parameters.decorator.world, parameters.random, j1, i5, j8);
 				} else {
-					new WorldFeatureLake(Block.fluidLavaStill.id).place(parameters.decorator.world, parameters.random, j1, i5, j8);
+
+					new WorldFeatureLake(Blocks.FLUID_LAVA_STILL.id()).place(parameters.decorator.world, parameters.random, j1, i5, j8);
 				}
 			}
 		}
@@ -102,8 +105,9 @@ public class HellFunctions {
 	 */
 	public static WorldFeature getTreeFeature(Parameters parameters){
 		boolean hasLeaves = parameters.random.nextInt(hellConfig.invLeavesProbability) == 0;
-		WorldFeature tree = parameters.random.nextInt(10) == 0 ? new WorldFeatureTreeFancy(hasLeaves ? Block.leavesOak.id : 0, Block.logOak.id) : new WorldFeatureTree(hasLeaves ? Block.leavesOak.id : 0, Block.logOak.id, 4);
-		tree.func_517_a(1.0, 1.0, 1.0);
+		WorldFeature tree = parameters.random.nextInt(10) == 0 ? new WorldFeatureTreeFancy(hasLeaves ? Blocks.LEAVES_OAK.id() : 0, Blocks.LOG_OAK.id()) : new WorldFeatureTree(hasLeaves ? Blocks.LEAVES_OAK.id() : 0, Blocks.LOG_OAK.id(), 4);
+		//tree.func_517_a(1.0, 1.0, 1.0);
+		tree.init(1.0, 1.0, 1.0);
 		return tree;
 	}
 

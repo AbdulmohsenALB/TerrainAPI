@@ -1,6 +1,7 @@
 package useless.terrainapi.util;
 
 import net.minecraft.core.block.Block;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.core.data.registry.Registries;
 import net.minecraft.core.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
@@ -65,6 +66,7 @@ public class Utilities {
 		if (translationKey == null){
 			return null;
 		}
-		return Block.setupTranslationKey(translationKey);
+		return Blocks.getBlock(Blocks.keyToIdMap.get(translationKey));
+		//return Block.setupTranslationKey(translationKey);
 	}
 }

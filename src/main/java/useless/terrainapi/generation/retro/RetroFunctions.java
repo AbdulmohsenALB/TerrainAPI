@@ -1,6 +1,7 @@
 package useless.terrainapi.generation.retro;
 
 import net.minecraft.core.block.Block;
+import net.minecraft.core.block.Blocks;
 import net.minecraft.core.world.generate.feature.WorldFeature;
 import net.minecraft.core.world.generate.feature.WorldFeatureDungeon;
 import net.minecraft.core.world.generate.feature.tree.WorldFeatureTree;
@@ -22,7 +23,7 @@ public class RetroFunctions {
 			int structX = x + parameters.random.nextInt(16) + 8;
 			int structY = parameters.decorator.minY + parameters.random.nextInt(parameters.decorator.rangeY);
 			int structZ = z + parameters.random.nextInt(16) + 8;
-			new WorldFeatureDungeon(Block.cobbleStone.id, Block.cobbleStoneMossy.id, null).place(parameters.decorator.world, parameters.random, structX, structY, structZ);
+			new WorldFeatureDungeon(Blocks.COBBLE_STONE.id(), Blocks.COBBLE_STONE_MOSSY.id(), null).place(parameters.decorator.world, parameters.random, structX, structY, structZ);
 		}
 		return null;
 	}
@@ -32,11 +33,12 @@ public class RetroFunctions {
 	 * @return Tree feature as specified by Biome#getRandomWorldGenForTrees
 	 */
 	public static WorldFeature getTreeFeature(Parameters parameters){
-		WorldFeature tree = new WorldFeatureTree(Block.leavesOakRetro.id, Block.logOak.id, 4);
+		WorldFeature tree = new WorldFeatureTree(Blocks.LEAVES_OAK_RETRO.id(), Blocks.LOG_OAK.id(), 4);
 		if (parameters.random.nextInt(10) == 0) {
-			tree = new WorldFeatureTreeFancy(Block.leavesOakRetro.id, Block.logOak.id);
+			tree = new WorldFeatureTreeFancy(Blocks.LEAVES_OAK_RETRO.id(), Blocks.LOG_OAK.id());
 		}
-		tree.func_517_a(1.0, 1.0, 1.0);
+		//tree.func_517_a(1.0, 1.0, 1.0);
+		tree.init(1.0, 1.0, 1.0);
 		return tree;
 	}
 
