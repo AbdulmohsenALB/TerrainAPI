@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    modImplementation 'com.github.AbdulmohsenALB:TerrainAPI:aa1-7.3_04'
+    modImplementation 'com.github.AbdulmohsenALB:TerrainAPI:v1.5.1-7.3_04'
 }
 ```
 ```java
