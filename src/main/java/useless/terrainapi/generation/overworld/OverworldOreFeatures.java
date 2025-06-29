@@ -7,6 +7,7 @@ import net.minecraft.core.world.biome.Biome;
 import net.minecraft.core.world.generate.feature.WorldFeature;
 import net.minecraft.core.world.generate.feature.WorldFeatureOre;
 import org.jetbrains.annotations.ApiStatus;
+import useless.terrainapi.TerrainMain;
 import useless.terrainapi.config.OreConfig;
 import useless.terrainapi.generation.GeneratorFeatures;
 import useless.terrainapi.generation.Parameters;
@@ -74,6 +75,21 @@ public class OverworldOreFeatures extends GeneratorFeatures {
 	 * @param defaultChances Default number of chances per chunk to generate an ore patch, this values scales with world height
 	 * @param defaultRange Value from [0, 1], it's the default fraction from the bottom of the world to the surface that the ore can generate
 	 * @param hasStoneStates Does ore have states for each stone type
+	 *                       <p>if hasStoneStates is true, Stone state names must follow one of these formats (using ruby as an example):</p>
+	 *                          <ul>
+	 *                            <li><b>Format 1</b>
+	 *                            <ul>
+	 *                                <li>Original ore: ruby_ore</li>
+	 *                                <li>Stone states: ruby_ore_limestone, ruby_ore_permafrost, ruby_ore_granite, ruby_ore_basalt</li>
+	 *                              </ul>
+	 *                            </li>
+	 *                            <li><b>Format 2</b>
+	 *                              <ul>
+	 *                                <li>Original ore: ruby_ore_stone</li>
+	 *                                <li>Stone states: ruby_ore_limestone, ruby_ore_permafrost, ruby_ore_granite, ruby_ore_basalt</li>
+	 *                              </ul>
+	 *                            </li>
+	 *                          </ul>
 	 */
 	public void addManagedOreFeature(String modID, Block<?> block, int defaultClusterSize, int defaultChances, float defaultRange, boolean hasStoneStates){
 		config.setOreValues(modID, block, defaultClusterSize, defaultChances, defaultRange);
@@ -83,6 +99,21 @@ public class OverworldOreFeatures extends GeneratorFeatures {
 	/**Adds an WorldFeatureOre, which has its generation characteristics managed by OreConfig
 	 * @param block Ore to generate
 	 * @param hasStoneStates Does ore have states for each stone type
+	 *                       <p>if hasStoneStates is true, Stone state names must follow one of these formats (using ruby as an example):</p>
+	 *                          <ul>
+	 *                            <li><b>Format 1</b>
+	 *                            <ul>
+	 *                                <li>Original ore: ruby_ore</li>
+	 *                                <li>Stone states: ruby_ore_limestone, ruby_ore_permafrost, ruby_ore_granite, ruby_ore_basalt</li>
+	 *                              </ul>
+	 *                            </li>
+	 *                            <li><b>Format 2</b>
+	 *                              <ul>
+	 *                                <li>Original ore: ruby_ore_stone</li>
+	 *                                <li>Stone states: ruby_ore_limestone, ruby_ore_permafrost, ruby_ore_granite, ruby_ore_basalt</li>
+	 *                              </ul>
+	 *                            </li>
+	 *                          </ul>
 	 */
 	public void addManagedOreFeature(Block<?> block, boolean hasStoneStates){
 		String currentBlock = block.getKey();
@@ -92,7 +123,6 @@ public class OverworldOreFeatures extends GeneratorFeatures {
 	}
 
 	private WorldFeatureOre createWorldFeatureOre(Block<?> block, boolean hasStoneStates) {
-		// stone states
 		if (hasStoneStates) {
 			WorldFeatureOre.OreMap oreMap = new WorldFeatureOre.OreMap();
 			oreMap.put(Blocks.STONE, block);
@@ -108,12 +138,16 @@ public class OverworldOreFeatures extends GeneratorFeatures {
 	private Block<?> getOreVariant(Block<?> block, String oreType) {
 		NamespaceID namespaceID = block.namespaceId();
 		switch (oreType) {
-			case "limestone": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), namespaceID.value() + "_limestone"), block);
-			case "granite": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), namespaceID.value() + "_granite"), block);
-			case "permafrost": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), namespaceID.value() + "_permafrost"), block);
-			case "basalt": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), namespaceID.value() + "_basalt"), block);
+			case "limestone": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), getVariantsFormat(namespaceID.value()) + "_limestone"), block);
+			case "granite": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), getVariantsFormat(namespaceID.value()) + "_granite"), block);
+			case "permafrost": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), getVariantsFormat(namespaceID.value()) + "_permafrost"), block);
+			case "basalt": return getBlockOrFallback(NamespaceID.getTemp(namespaceID.namespace(), getVariantsFormat(namespaceID.value()) + "_basalt"), block);
 			default: return block;
 		}
+	}
+
+	private String getVariantsFormat(String namespaceIDValue) {
+		return namespaceIDValue.lastIndexOf("_stone") != -1 ? namespaceIDValue.substring(0, namespaceIDValue.length() - 6) : namespaceIDValue;
 	}
 
 	private Block<?> getBlockOrFallback(NamespaceID namespaceID, Block<?> block) {
@@ -127,6 +161,21 @@ public class OverworldOreFeatures extends GeneratorFeatures {
 	 * @param defaultStartingRange Value from [0, 1], it's the default fraction from the bottom of the world to the surface that the ore can generate
 	 * @param defaultEndingRange Value from [0, 1], it's the default fraction from the bottom of the world to the surface that the ore can generate
 	 * @param hasStoneStates Does ore have states for each stone type
+	 *                       <p>if hasStoneStates is true, Stone state names must follow one of these formats (using ruby as an example):</p>
+	 *                          <ul>
+	 *                            <li><b>Format 1</b>
+	 *                            <ul>
+	 *                                <li>Original ore: ruby_ore</li>
+	 *                                <li>Stone states: ruby_ore_limestone, ruby_ore_permafrost, ruby_ore_granite, ruby_ore_basalt</li>
+	 *                              </ul>
+	 *                            </li>
+	 *                            <li><b>Format 2</b>
+	 *                              <ul>
+	 *                                <li>Original ore: ruby_ore_stone</li>
+	 *                                <li>Stone states: ruby_ore_limestone, ruby_ore_permafrost, ruby_ore_granite, ruby_ore_basalt</li>
+	 *                              </ul>
+	 *                            </li>
+	 *                          </ul>
 	 */
 	public void addManagedOreFeature(String modID, Block<?> block, int defaultClusterSize, int defaultChances, float defaultStartingRange, float defaultEndingRange, boolean hasStoneStates){
 		config.setOreValues(modID, block, defaultClusterSize, defaultChances, defaultStartingRange, defaultEndingRange);
